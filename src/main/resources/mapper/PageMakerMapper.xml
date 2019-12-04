@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTDMapper3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.PageMakerMapper">
+	<select id="testlist" resultType="com.example.demo.bean.FileBoardVO">
+
+<!-- param1 <= pagenum // param2 <= contentnum -->
+		SELECT * FROM
+			(SELECT A.*, ROWNUM AS RNUM FROM
+				(SELECT * FROM file_board ORDER BY b_no desc)A
+			WHERE ROWNUM <![CDATA[<]]>= #{param2})
+		WHERE RNUM <![CDATA[>]]>= #{param1}
+
+	</select>
+
+	<select id="testcount" resultType="int">
+		SELECT count(*) from file_board
+	</select>
+
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTDMapper3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.mapper.CommentMapper">
+
+	<select id="commentCount" resultType="int">
+		SELECT COUNT(*)
+		FROM comments
+	</select>
+
+	<select id="commentList" resultType="com.example.demo.bean.CommentVO">
+		SELECT * FROM comments order by c_no desc
+	</select>
+
+	<insert id="commentInsert" parameterType="com.example.demo.bean.CommentVO">
+		INSERT INTO comments(c_no, b_no, content, writer, reg_date) 
+		VALUES(comments_seq.nextval, #{b_no}, #{content}, #{writer}, sysdate)
+	</insert>
+
+	<update id="commentUpdate" parameterType="com.example.demo.bean.CommentVO">
+		UPDATE comments
+		SET content=#{content}
+		WHERE c_no=#{c_no}
+	</update>
+
+	<delete id="commentDelete" parameterType="int">
+		DELETE FROM comments
+		WHERE c_no=#{c_no}
+	</delete>
+
+</mapper>
